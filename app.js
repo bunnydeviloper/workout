@@ -20,7 +20,23 @@ const number = document.createElement('h1');
 let counter = 0;
 number.innerHTML = counter;
 
-window
+let keys;
+
+window.addEventListener('keydown', function(e) {
+  keys = keys || [];
+  keys[e.keyCode] = (e.type == "keydown"); // will be true if key is being pressed
+});
+window.addEventListener('keyup', function(e) {
+  keys[e.keyCode] = (e.type == "keydown"); // will be false if key is not pressed
+});
+
+
+if (keys && keys.length > 0) {
+  if (keys[83]) counter++;
+}
+keys = []; // soft reset?
+
+
 // quote
 // duration
 // picture modal
