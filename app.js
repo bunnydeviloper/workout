@@ -1,8 +1,5 @@
 window.onload = function() { startWorkout() };
 
-// create component to display duration, has a start and stop one reps = 1000
-// pick 10 hot pictures and display each time rep = 100
-
 let counter = 0;
 let keys;
 let hour = 0, minute = 0, second = 0;
@@ -48,12 +45,12 @@ function updateCounter() {
   reps.innerHTML = counter;
 
   // display a new quote everytime user hit 50 count
-  if (counter === 1 || counter % 5 === 0) {
+  if (counter === 1 || counter % 25 === 0) {
     displayQuotes();
   }
 
   // display a congratulations modal when user finished 1000 count
-  if (counter === 10) {
+  if (counter === 1000) {
     displayCongrats();
   }
 }
@@ -108,5 +105,5 @@ function displayCongrats() {
 
 }
 
-// picture modal
+// TODO: start should start a youtube workout songs channel
 // LATER: save time to localstorage
