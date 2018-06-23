@@ -5,13 +5,29 @@ window.onload = function() { startWorkout() };
 
 let counter = 0;
 let keys;
+let hour = 0, minute = 0, second = 0;
+let interval;
 
-const newh2 = document.createElement('h2');
+const reps = document.createElement('h2');
+const timer = document.createElement('div');
 
 function startWorkout() {
+  const spacebar = document.getElementById('spacebar');
+
+  // reset timer
+  hour = 0, minute = 0; second = 0;
+  timer.innerHTML = `${hour} hour ${minute} minutes ${second} seconds`;
+  clearInterval(interval);
+  document.body.addEventListener('keydown', startTimer, {once:true}); // invoke the listener only once
+  timer.style.color = "blue";
+  timer.style.padding = "10px";
+  spacebar.appendChild(timer);
+
+  // reset counter
   counter = 0;
-  document.body.appendChild(newh2);
-  newh2.innerHTML = counter;
+  spacebar.appendChild(reps);
+  reps.style.fontSize = "1000%";
+  reps.innerHTML = counter;
 
   update();
 }
@@ -26,7 +42,7 @@ function update() {
 
 function updateCounter() {
   counter++;
-  newh2.innerHTML = counter;
+  reps.innerHTML = counter;
 
   // display a new quote everytime user hit 50 count
   if (counter === 1 || counter % 5 === 0) {
@@ -53,21 +69,34 @@ function displayQuotes() {
 
   const quotes = [q0, q1, q2, q3, q4, q5, q6, q7, q8, q9];
 
-  const motivation = document.getElementById('motivation');
   const random = function(max, min) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
+  const motivation = document.getElementById('motivation');
   motivation.style.color = "red";
   motivation.innerHTML = quotes[random(0, 9)];
 }
 
+function startTimer() {
+  interval = setInterval(function() {
+    timer.innerHTML = `${hour} hour ${minute} minutes ${second} seconds`;
+    second++;
+    if (second == 60) {
+      minute++;
+      second = 0;
+    }
+    if (minute == 60) {
+      hour++;
+      minute = 0;
+    }
+  }, 1000);
+}
+
 function displayCongrats() {
+  clearInterval(interval);
   const congrats = document.getElementById('congrats');
   congrats.style.display = "flex";
 }
 
-// duration
 // picture modal
-// congrats modal
-//
 // LATER: save time to localstorage
