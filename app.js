@@ -26,8 +26,11 @@ function startWorkout() {
   // reset counter
   counter = 0;
   spacebar.appendChild(reps);
-  reps.style.fontSize = "1000%";
+  reps.style.fontSize = "800%";
   reps.innerHTML = counter;
+
+  const stop = document.getElementById('stop');
+  stop.addEventListener('click', displayCongrats);
 
   update();
 }
@@ -50,7 +53,7 @@ function updateCounter() {
   }
 
   // display a congratulations modal when user finished 1000 count
-  if (counter === 1000) {
+  if (counter === 10) {
     displayCongrats();
   }
 }
@@ -96,6 +99,13 @@ function displayCongrats() {
   clearInterval(interval);
   const congrats = document.getElementById('congrats');
   congrats.style.display = "flex";
+
+  const totalTime = document.createElement('h3');
+  totalTime.innerHTML = `Finished in: ${timer.innerHTML}`;
+  totalTime.style.color = "black";
+  totalTime.style.fontSize = "3em";
+  congrats.appendChild(totalTime);
+
 }
 
 // picture modal

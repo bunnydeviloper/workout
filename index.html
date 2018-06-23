@@ -8,16 +8,14 @@
     text-align: center;
   }
   button {
-    background-color: red;
-    color: white;
+    background-color: yellow;
+    color: black;
     font-size: 15px;
     cursor: pointer;
   }
-  img {
-    width: 25%;
-  }
   #congrats {
     display: none;
+    flex-direction: column;
     position: fixed;
     justify-content: center;
     align-items: center;
@@ -34,10 +32,11 @@
   <body>
     <!-- Congratulations -->
     <div id="congrats">
-      <h1>Congratulations! You have finished 1000 climb today.</h1>
+      <h1>Congratulations! You have finished your workout today</h1>
     </div>
 
-    <h2 id="spacebar">Hello Sexy lady!!! Press spacebar to START</h2>
+    <h2 id="spacebar">Hello Sexy lady!!! Press spacebar to start.</h2>
+    <button id="stop">STOP</button>
     <h1 id="motivation"></h1>
 
   </body>
