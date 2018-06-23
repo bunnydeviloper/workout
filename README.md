@@ -1,6 +1,6 @@
 # Sophia's personal workout clock [[here](https://bunnydeviloper.github.io/workout/)]
 
-![screenshot](https://bunnydeviloper.github.io/workout/readmebg.PNG =200px)
+![screenshot](https://bunnydeviloper.github.io/workout/readmebg.PNG =200x)
 
 **Stair climbing**  
 1. Timer and counter start at first spacebar keydown
