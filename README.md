@@ -9,4 +9,10 @@
 
 ### Alternative: user can press stop button to stop (eg: go running outside)
 
+// TODO: add an input to search for songs on youtube and play it
+// TODO: add commonly motivated songs list for chosing
+
+// TODO: add an input to search travel desination
+// TODO: add a map, make a route for your climb, and track it on the map
+
 // TODO: add each day's result to local storage or somewhere so you can track your progress
