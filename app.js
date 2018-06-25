@@ -4,13 +4,14 @@ let counter = 0;
 let keys;
 let hour = 0, minute = 0, second = 0;
 let interval;
+let totalTime = '';
 
-const reps = document.createElement('h2');
+const reps = document.getElementById('reps');
 const timer = document.createElement('div');
+const history = document.getElementById('history');
+const spacebar = document.getElementById('spacebar');
 
 function startWorkout() {
-  const spacebar = document.getElementById('spacebar');
-
   // reset timer
   hour = 0, minute = 0; second = 0;
   timer.innerHTML = `${hour} hour ${minute} minutes ${second} seconds`;
@@ -22,9 +23,11 @@ function startWorkout() {
 
   // reset counter
   counter = 0;
-  spacebar.appendChild(reps);
   reps.style.fontSize = "800%";
   reps.innerHTML = counter;
+
+  history.innerHTML = 'Previous results: ';
+  retrieveTime();
 
   const stop = document.getElementById('stop');
   stop.addEventListener('click', displayCongrats);
@@ -97,13 +100,52 @@ function displayCongrats() {
   const congrats = document.getElementById('congrats');
   congrats.style.display = "flex";
 
-  const totalTime = document.createElement('h3');
+  totalTime = document.createElement('h3');
   totalTime.innerHTML = `Finished in: ${timer.innerHTML}`;
   totalTime.style.color = "black";
   totalTime.style.fontSize = "3em";
   congrats.appendChild(totalTime);
 
+  if (typeof(Storage) !== "undefined") {
+    SaveTime();
+  } else {
+    console.log('Browser does not support local storage!');
+  }
 }
 
 // TODO: start should start a youtube workout songs channel
+
 // LATER: save time to localstorage
+let timeArr = [];
+
+function SaveTime() {
+  const date = new Date();
+  const timeObj = {
+    day: date.getDate(),
+    month: date.getMonth() + 1, // b/c months count from 0-11
+    year: date.getFullYear(),
+    sec: date.getSeconds(),
+    min: date.getMinutes(),
+    hr: date.getHours(),
+    duration: timer.innerHTML,
+  };
+  timeArr.push(timeObj);
+  console.log(timeArr);
+  localStorage.setItem("savedTime", JSON.stringify(timeArr));
+  //history.append(JSON.stringify(timeArr) + ' -- > Saved<br />' );
+  //console.log(localStorage);
+  console.log('time has been saved');
+}
+
+function retrieveTime() {
+  const savedTime = JSON.parse(localStorage.getItem("savedTime"));
+  console.log('retrieving time', savedTime);
+  //You have the time with you now
+  /*
+  const li = document.createElement('li')
+  li.innerHTML = `<li>${timeObj.day}/${timeObj.month}/${timeObj.year} @ 
+  ${timeObj.hr}:${timeObj.min}:${timeObj.sec} --> ${timeObj.duration}</li>`;
+  history.appendChild(li);
+  //it erase the previous time
+  */
+}

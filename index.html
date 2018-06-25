@@ -1,7 +1,6 @@
 <!DOCTYPE>
 <html>
   <head>
-    <script src="app.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <style>
   body {
@@ -29,6 +28,13 @@
   h1 {
     font-size: 5em;
   }
+  #content {
+    display: flex;
+  }
+  #content #reps, #content #history {
+    flex: 1;
+    margin: auto;
+  }
 </style>
   </head>
   <body>
@@ -38,8 +44,15 @@
     </div>
 
     <h2 id="spacebar">Hello Sexy lady!!! Press spacebar to start.</h2>
+
+    <div id="content">
+      <h2 id="reps"></h2>
+      <ul id="history"></ul>
+    </div>
+
     <button id="stop">STOP</button>
     <h1 id="motivation"></h1>
 
+    <script src="app.js"></script>
   </body>
 </html>
