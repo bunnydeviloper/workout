@@ -115,37 +115,29 @@ function displayCongrats() {
 
 // TODO: start should start a youtube workout songs channel
 
-// LATER: save time to localstorage
-let timeArr = [];
+//localStorage.clear();
+const savedTime = JSON.parse(localStorage.getItem("savedTime")) || [];
 
 function SaveTime() {
   const date = new Date();
   const timeObj = {
-    day: date.getDate(),
-    month: date.getMonth() + 1, // b/c months count from 0-11
-    year: date.getFullYear(),
+    d: date.getDate(),
+    m: date.getMonth() + 1, // b/c months count from 0-11
+    y: date.getFullYear(),
     sec: date.getSeconds(),
     min: date.getMinutes(),
     hr: date.getHours(),
-    duration: timer.innerHTML,
+    dur: timer.innerHTML,
   };
-  timeArr.push(timeObj);
-  console.log(timeArr);
-  localStorage.setItem("savedTime", JSON.stringify(timeArr));
-  //history.append(JSON.stringify(timeArr) + ' -- > Saved<br />' );
-  //console.log(localStorage);
-  console.log('time has been saved');
+  savedTime.push(timeObj);
+  localStorage.setItem("savedTime", JSON.stringify(savedTime));
 }
 
 function retrieveTime() {
-  const savedTime = JSON.parse(localStorage.getItem("savedTime"));
   console.log('retrieving time', savedTime);
-  //You have the time with you now
-  /*
-  const li = document.createElement('li')
-  li.innerHTML = `<li>${timeObj.day}/${timeObj.month}/${timeObj.year} @ 
-  ${timeObj.hr}:${timeObj.min}:${timeObj.sec} --> ${timeObj.duration}</li>`;
-  history.appendChild(li);
-  //it erase the previous time
-  */
+  savedTime.map(e => {
+    const li = document.createElement('li')
+    li.innerHTML = `<li>${e.d}/${e.m}/${e.y} @ ${e.hr}:${e.min}:${e.sec} --> ${e.dur}</li>`;
+    history.appendChild(li);
+  });
 }
