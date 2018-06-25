@@ -14,7 +14,7 @@ const spacebar = document.getElementById('spacebar');
 function startWorkout() {
   // reset timer
   hour = 0, minute = 0; second = 0;
-  timer.innerHTML = `${hour} hour ${minute} minutes ${second} seconds`;
+  timer.innerHTML = `${hour} hr ${minute} mins ${second} secs`;
   clearInterval(interval);
   document.body.addEventListener('keydown', startTimer, {once:true}); // invoke the listener only once
   timer.style.color = "blue";
@@ -23,10 +23,12 @@ function startWorkout() {
 
   // reset counter
   counter = 0;
-  reps.style.fontSize = "800%";
+  reps.style.fontSize = "200px";
+  reps.style.color = "blue";
+  reps.style.height = "100%";
   reps.innerHTML = counter;
 
-  history.innerHTML = 'Previous results: ';
+  // get the record of previously saved time
   retrieveTime();
 
   const stop = document.getElementById('stop');
@@ -82,7 +84,7 @@ function displayQuotes() {
 
 function startTimer() {
   interval = setInterval(function() {
-    timer.innerHTML = `${hour} hour ${minute} minutes ${second} seconds`;
+    timer.innerHTML = `${hour} hr ${minute} mins ${second} secs`;
     second++;
     if (second == 60) {
       minute++;
@@ -115,7 +117,8 @@ function displayCongrats() {
 
 // TODO: start should start a youtube workout songs channel
 
-//localStorage.clear();
+// TODO: make a button to clear history
+// localStorage.clear();
 const savedTime = JSON.parse(localStorage.getItem("savedTime")) || [];
 
 function SaveTime() {
@@ -128,6 +131,7 @@ function SaveTime() {
     min: date.getMinutes(),
     hr: date.getHours(),
     dur: timer.innerHTML,
+    c: counter,
   };
   savedTime.push(timeObj);
   localStorage.setItem("savedTime", JSON.stringify(savedTime));
@@ -137,7 +141,7 @@ function retrieveTime() {
   console.log('retrieving time', savedTime);
   savedTime.map(e => {
     const li = document.createElement('li')
-    li.innerHTML = `<li>${e.d}/${e.m}/${e.y} @ ${e.hr}:${e.min}:${e.sec} --> ${e.dur}</li>`;
-    history.appendChild(li);
+    li.innerHTML = `<li>${e.d}/${e.m}/${e.y} @ ${e.hr}:${e.min}:${e.sec} --> ${e.dur}, count: ${e.c}</li>`;
+    history.insertBefore(li, history.childNodes[0]);
   });
 }
