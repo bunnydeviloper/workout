@@ -11,12 +11,15 @@ const timer = document.createElement('div');
 const history = document.getElementById('history');
 const spacebar = document.getElementById('spacebar');
 
+const start = document.getElementById('start');
+start.addEventListener('click', startTimer, {once: true});
+
 function startWorkout() {
   // reset timer
   hour = 0, minute = 0; second = 0;
   timer.innerHTML = `${hour} hr ${minute} mins ${second} secs`;
   clearInterval(interval);
-  document.body.addEventListener('keydown', startTimer, {once:true}); // invoke the listener only once
+  document.body.addEventListener('keydown', startTimer, {once: true}); // invoke the listener only once
   timer.style.color = "blue";
   timer.style.padding = "10px";
   spacebar.appendChild(timer);
@@ -49,13 +52,13 @@ function updateCounter() {
   counter++;
   reps.innerHTML = counter;
 
-  // display a new quote everytime user hit 50 count
-  if (counter === 1 || counter % 25 === 0) {
+  // display a new quote everytime user hit 15 count
+  if (counter === 1 || counter % 15 === 0) {
     displayQuotes();
   }
 
-  // display a congratulations modal when user finished 1000 count
-  if (counter === 1000) {
+  // display a congratulations modal when user finished 100 count
+  if (counter === 100) {
     displayCongrats();
   }
 }
@@ -117,8 +120,6 @@ function displayCongrats() {
 
 // TODO: start should start a youtube workout songs channel
 
-// TODO: make a button to clear history
-// localStorage.clear();
 const savedTime = JSON.parse(localStorage.getItem("savedTime")) || [];
 
 function SaveTime() {
@@ -138,10 +139,25 @@ function SaveTime() {
 }
 
 function retrieveTime() {
-  console.log('retrieving time', savedTime);
-  savedTime.map(e => {
+  savedTime.map( (e, index) => {
     const li = document.createElement('li')
-    li.innerHTML = `<li>${e.d}/${e.m}/${e.y} @ ${e.hr}:${e.min}:${e.sec} --> ${e.dur}, count: ${e.c}</li>`;
+    li.innerHTML = `${e.d}/${e.m}/${e.y} @ ${e.hr}:${e.min}:${e.sec} --> ${e.dur}, count: ${e.c}`;
+    li.style.display = "inline-block";
+    const remove = document.createElement('button')
+    remove.addEventListener('click', function() { removeTime(index); });
+    remove.innerHTML = `remove`;
+    remove.style.fontSize = "0.5em";
+    remove.style.margin = "5px";
+    li.appendChild(remove);
     history.insertBefore(li, history.childNodes[0]);
   });
+}
+
+function removeTime(index) {
+  savedTime.splice(index, 1);
+  localStorage.setItem("savedTime", JSON.stringify(savedTime)); // save again after update
+  // NOTE: as of right now, you have to refresh the page..., need to work on this
+
+  // TODO : make a button to clear all
+  // localStorage.clear();
 }
