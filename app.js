@@ -154,6 +154,7 @@ function retrieveTime() {
     li.appendChild(remove);
     history.insertBefore(li, history.childNodes[0]);
   });
+  drawChart();
 }
 
 // TODO : make a button to clear all
@@ -169,30 +170,42 @@ function removeTime(index) {
 */
 // Add google charts to your web page. Load google charts:
 google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawChart);
+// google.charts.setOnLoadCallback(drawChart); // calling the fn inside retrieveTime fn
 
 // Draw the chart and set the chart values
 function drawChart() {
-  var data = google.visualization.arrayToDataTable([
-    ['Age', 'Weight'],
-    [ 8,      12],
-    [ 4,      5.5],
-    [ 11,     14],
-    [ 4,      5],
-    [ 3,      3.5],
-    [ 6.5,    7]
-  ]);
+
+  /* Function to convert array of objects to array of arrays
+   * Dont' really need this b/c we only need to convert specific values
+  // console.log(savedTime);
+  const output = savedTime.map(function(obj) {
+    return Object.keys(obj).sort().map(function(key) {
+      return obj[key];
+    });
+  });
+  console.log(output);
+  */
+
+  const outputData = [];
+  outputData.push(['durMin', 'count']); // must give a header to the table "array"
+  for(let i = 0; i < savedTime.length; i++) {
+    const input = savedTime[i];
+    outputData.push([+input.durMin, +input.c]); // must push #, cannot push string
+  }
+
+  // const data = google.visualization.arrayToDataTable([ ['Age', 'Weight'], [ 8, 12], [ 6.5, 7] ]);
+  const data = google.visualization.arrayToDataTable(outputData);
 
   // Optional; add a title and set the width and height of the chart
-  var options = {
-    title: 'Age vs. Weight comparison',
-    hAxis: {title: 'Age', minValue: 0, maxValue: 15},
-    vAxis: {title: 'Weight', minValue: 0, maxValue: 15},
+  const options = {
+    title: 'Duration vs. Count comparison',
+    hAxis: {title: 'Duration (minutes)', minValue: 0, maxValue: 60},
+    vAxis: {title: 'Count', minValue: 0, maxValue: 60},
     legend: 'none'
   };
 
   // Display the chart inside the <div> element with id="chart"
-  var chart = new google.visualization.ScatterChart(document.getElementById('chart'));
+  const chart = new google.visualization.ScatterChart(document.getElementById('chart'));
 
   chart.draw(data, options);
 }
