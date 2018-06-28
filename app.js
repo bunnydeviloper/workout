@@ -105,6 +105,8 @@ function displayCongrats() {
   const congrats = document.getElementById('congrats');
   congrats.style.display = "flex";
 
+  document.getElementById('chart').style.display = "none";
+
   totalTime = document.createElement('h3');
   totalTime.innerHTML = `Finished in: ${timer.innerHTML}`;
   totalTime.style.color = "black";
