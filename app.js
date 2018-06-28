@@ -131,7 +131,9 @@ function SaveTime() {
     sec: date.getSeconds(),
     min: date.getMinutes(),
     hr: date.getHours(),
-    dur: timer.innerHTML,
+    durHour: hour,
+    durMin: minute,
+    durSec: second,
     c: counter,
   };
   savedTime.push(timeObj);
@@ -141,7 +143,8 @@ function SaveTime() {
 function retrieveTime() {
   savedTime.map( (e, index) => {
     const li = document.createElement('li')
-    li.innerHTML = `${e.d}/${e.m}/${e.y} @ ${e.hr}:${e.min}:${e.sec} --> ${e.dur}, count: ${e.c}`;
+    li.innerHTML = `${e.d}/${e.m}/${e.y} @ ${e.hr}:${e.min}:${e.sec} -->
+      ${e.durHour}:${e.durMin}:${e.durSec}, count: ${e.c}`;
     li.style.display = "inline-block";
     const remove = document.createElement('button')
     remove.addEventListener('click', function() { removeTime(index); });
@@ -153,11 +156,37 @@ function retrieveTime() {
   });
 }
 
+// TODO : make a button to clear all
+// localStorage.clear();
+
 function removeTime(index) {
   savedTime.splice(index, 1);
   localStorage.setItem("savedTime", JSON.stringify(savedTime)); // save again after update
   // NOTE: as of right now, you have to refresh the page..., need to work on this
-
-  // TODO : make a button to clear all
-  // localStorage.clear();
 }
+
+/*
+// Add google charts to your web page. Load google charts:
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+// Draw the chart and set the chart values
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+  ['Task', 'Hours per Day'],
+  ['Work', 8],
+  ['Friends', 2],
+  ['Eat', 2],
+  ['TV', 3],
+  ['Gym', 2],
+  ['Sleep', 7]
+]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'My Average Day', 'width':400, 'height':300};
+
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  chart.draw(data, options);
+}
+*/
